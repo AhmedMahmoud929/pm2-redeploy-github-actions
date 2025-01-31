@@ -1,4 +1,4 @@
-# **Automated Deployment with GitHub Actions and PM2 🚀**
+# **Automated Deployment with GitHub Actions and PM2**
 
 This repository provides an automated CI/CD pipeline for deploying a **Node.js** application using **PM2** and **GitHub Actions**.  
 
