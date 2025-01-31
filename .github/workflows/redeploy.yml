@@ -15,20 +15,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      - name: testing
+        run: echo "TESTINGGGGGGG"
 
-      - name: Deploy via SSH
-        run: |
-          ssh ${{ secrets.USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd ${{ secrets.WORKDIR }}
-            git pull origin main
-            npm install --production
-            npm run build
-            pm2 restart ${{ secrets.PROCESS_ID }}
-            echo 'Congratulations 🎉'
-          EOF
+      # - name: Setup SSH Key
+      #   run: |
+      #     mkdir -p ~/.ssh
+      #     echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # - name: Deploy via SSH
+      #   run: |
+      #     ssh ${{ secrets.USER }}@${{ secrets.SSH_HOST }} << 'EOF'
+      #       cd ${{ secrets.WORKDIR }}
+      #       git pull origin main
+      #       npm install --production
+      #       npm run build
+      #       pm2 restart ${{ secrets.PROCESS_ID }}
+      #       echo 'Congratulations 🎉'
+      #     EOF
