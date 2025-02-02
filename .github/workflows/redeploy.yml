@@ -1,34 +1,28 @@
-name: Redeploying PM2 Server
+name: Deploy and Restart PM2
 
 on:
   push:
     branches:
-      - main
+      - main # or your production branch
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    container:
-      image: node:20
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-      - name: Setup SSH Key
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_HOST }}
 
-      - name: Deploy via SSH
+      - name: Add known hosts
+        run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy and restart PM2
         run: |
-          ssh ${{ secrets.USER }}@${{ secrets.SSH_HOST }} << 'EOF'
-            cd ${{ secrets.WORKDIR }}
-            git pull origin main
-            npm install --production
-            npm run build
-            pm2 restart ${{ secrets.PROCESS_ID }}
-            echo 'Congratulations 🎉'
+          ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} << EOF
+            echo "It works"
           EOF
