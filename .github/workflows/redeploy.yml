@@ -2,9 +2,7 @@ name: Deploy Project
 
 on:
   push:
-    branches:
-      - main
-      - dev # Deploy on both main and dev branches
+    branches: [main]
 
 jobs:
   deploy:
@@ -22,27 +20,11 @@ jobs:
             [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
             export PATH="$NVM_DIR/versions/node/$(ls $NVM_DIR/versions/node)/bin:$PATH"
 
-            # Determine environment based on branch
-            if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
-              BRANCH="main"
-              WORKDIR="${{ secrets.WORKDIR_PROD }}"
-              APP_NAME="zebralo-front"
-            else
-              BRANCH="dev"
-              WORKDIR="${{ secrets.WORKDIR_DEV }}"
-              APP_NAME="zebralo-front-dev"
-            fi
-
-            echo "🚀 Deploying branch: $BRANCH"
-
-            cd $WORKDIR
-            git pull origin $BRANCH
+            cd ${{ secrets.WORKDIR }}
+            git pull origin main
             npm install
             npm run build
-
-            # Restart the correct PM2 process
-            pm2 restart $APP_NAME
+            pm2 restart zebralo-front
             pm2 save
-
-            echo "✅ Deployment of $BRANCH branch completed!"
+            echo "congratulations 🎉"
           debug: true
