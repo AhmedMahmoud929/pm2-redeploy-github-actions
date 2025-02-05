@@ -16,5 +16,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ${{ secrets.WORKDIR }}
-            ls
+            git pull origin main
+            npm install
+            npm run build
+            pm2 restart zebralo-front
+            pm2 save
           debug: true
