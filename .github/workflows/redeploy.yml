@@ -26,4 +26,5 @@ jobs:
             npm run build
             pm2 restart zebralo-front
             pm2 save
+            echo "congratulations 🎉"
           debug: true
