@@ -1,0 +1,18 @@
+Oops! Where did your code go?
+Here's a riddle while you wonder so:
+
+I come and go like summer rain,
+Your precious code, now down the drain.
+No git history to save your day,
+Those commits? They've gone away!
+
+Your backup plan was rather thin,
+Like hoping clouds would make you win.
+Now all that's left is this sweet note,
+And memories of code you wrote.
+
+What's black and white and "null" all over?
+Your source folder, my dear developer! 
+
+P.S. Next time, try version control permissions 😇
+... Oh wait, that won't help either! 😈
